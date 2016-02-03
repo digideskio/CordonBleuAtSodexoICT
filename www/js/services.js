@@ -1,14 +1,55 @@
 angular.module('starter.services', [])
 
-  .factory('Food', function ($http, $rootScope, $stateParams) {
+  .factory('Menu', function ($http, $rootScope, $stateParams, $q) {
+    var deferred = $q.defer();
 
-    return {
-      all: function () {
-        return $http.get('http://www.sodexo.fi/ruokalistat/output/daily_json/54/2016/02/03/fi')}
-    };
-  })
+    var today = new Date();
+    var nextWeekToday = new Date();
+    nextWeekToday.setDate(nextWeekToday.getDate() + 5);
 
-.factory('Chats', function() {
+    var currentDate = today;
+    var menu = [];
+    var checkedDates = 0;
+    while (currentDate <= nextWeekToday)  {
+
+      var weekDay = currentDate.getDay();
+      if(weekDay !== 0 && weekDay !== 6) {
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth()+1;
+        if (month < 10) {
+          month = '0'+month;
+        }
+        var date = currentDate.getDate();
+        if (date < 10) {
+          date = '0'+date;
+        }
+        $http.get(
+          'http://www.sodexo.fi/ruokalistat/output/daily_json/54/'+year+'/'+month+'/'+date+'/fi'
+        ).then(function(response) {
+          var dateFromUrl = response.config.url;
+          dateFromUrl = dateFromUrl.replace('http://www.sodexo.fi/ruokalistat/output/daily_json/54/', '').replace('/fi', '');
+          checkedDates++;
+          var courses = response.data.courses;
+          if (courses.length > 0) {
+            var day = {
+              date: dateFromUrl,
+              courses: courses
+            };
+            menu.push(day);
+            console.log("a");
+          }
+          if (checkedDates === 4) {
+            deferred.resolve(menu);
+          }
+        });
+      }
+      currentDate.setDate(currentDate.getDate()+1);
+    }
+
+    return deferred.promise;
+  });
+
+/*.factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -55,4 +96,4 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+});*/

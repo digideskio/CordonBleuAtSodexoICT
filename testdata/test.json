@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "generated_timestamp": 1454518939,
+    "requested_timestamp": 1454450400,
+    "ref_url": "http:\/\/www.sodexo.fi\/ict",
+    "ref_title": "ICT - talo"
+  },
+  "courses": [
+    {
+      "title_fi": "Chili con carne",
+      "title_en": "Chili con carne (beef)",
+      "title_se": "Chili con carne",
+      "category": "Popular",
+      "price": "2,60 \/ 5,10",
+      "properties": "G, M",
+      "desc_fi": "t\u00e4ysjyv\u00e4riisi\u00e4",
+      "desc_en": "",
+      "desc_se": ""
+    },
+    {
+      "title_fi": "Kasvispaella",
+      "title_en": "Vegetable paella",
+      "title_se": "Gr\u00f6nsakspaella",
+      "category": "Vegetarian",
+      "price": "2,60 \/ 5,10",
+      "properties": "G, M",
+      "desc_fi": "paella kidneypavuista ja soijasuikaleista, jalapenoja",
+      "desc_en": "",
+      "desc_se": ""
+    },
+    {
+      "title_fi": "Broilerin leike",
+      "title_en": "Chicken schnitzel",
+      "title_se": "Kyckling schnitzel",
+      "category": "Special lunch",
+      "price": "5,00 \/ 7,50",
+      "properties": "L",
+      "desc_fi": "mojokastiketta ja patatas bravas",
+      "desc_en": "",
+      "desc_se": ""
+    },
+    {
+      "title_fi": "Bataattisosekeitto",
+      "title_en": "Sweet potato pure soup",
+      "title_se": "Batatpuresoppa",
+      "category": "Soup",
+      "price": "1,70 \/ 3,90",
+      "properties": "G, L",
+      "desc_fi": "",
+      "desc_en": "",
+      "desc_se": ""
+    },
+    {
+      "title_fi": "Tonnikalasalaatti",
+      "title_en": "Tuna fish salad",
+      "title_se": "Tonfisksallad",
+      "category": "Salad",
+      "price": "2,40 \/ 4,65",
+      "properties": "G, M",
+      "desc_fi": "",
+      "desc_en": "",
+      "desc_se": ""
+    },
+    {
+      "title_fi": "Ananasrahka",
+      "title_en": "Pineapple quark",
+      "title_se": "Ananaskvark",
+      "category": "Sweet",
+      "price": "1,30",
+      "properties": "G, L",
+      "desc_fi": "",
+      "desc_en": "",
+      "desc_se": ""
+    }
+  ]
+}

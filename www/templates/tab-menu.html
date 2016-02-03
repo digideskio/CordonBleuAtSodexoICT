@@ -1,0 +1,12 @@
+<ion-view view-title="Cordon Bleu @ICT">
+    <ion-content class="padding">
+        <div class="list" ng-repeat="day in menu">
+            <div class="item item-divider">
+                {{day.date}}
+            </div>
+            <a class="item" href="#" ng-repeat="food in day.courses">
+                {{food.title_en}} ({{food.price}} €)
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
