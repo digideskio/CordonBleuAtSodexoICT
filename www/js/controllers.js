@@ -1,5 +1,13 @@
 angular.module('starter.controllers', [])
 
+  .controller('IndexCtrl', function($scope, Food) {
+    $scope.success = 'false';
+    Food.all().success(function (response) {
+      $scope.success = 'true';
+    });
+    console.log("a");
+  })
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {

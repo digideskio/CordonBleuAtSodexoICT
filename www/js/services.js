@@ -1,5 +1,13 @@
 angular.module('starter.services', [])
 
+  .factory('Food', function ($http, $rootScope, $stateParams) {
+
+    return {
+      all: function () {
+        return $http.get('http://www.sodexo.fi/ruokalistat/output/daily_json/54/2016/02/03/fi')}
+    };
+  })
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
