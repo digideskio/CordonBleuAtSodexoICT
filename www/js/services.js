@@ -5,63 +5,100 @@ angular.module('starter.services', [])
 
     var today = new Date();
     var nextWeekToday = new Date();
-    nextWeekToday.setDate(nextWeekToday.getDate() + 5);
+    nextWeekToday.setDate(nextWeekToday.getDate() + 7);
 
-    var currentDate = today;
-    var menu = [];
-    var checkedDates = 0;
+    var dates = {
+      'sunday': 0,
+      'monday': 1,
+      'tuesday': 2,
+      'wednesday': 3,
+      'thursday': 4,
+      'friday': 5,
+      'saturday': 6
+    };
 
-    var compare = function(a, b) {
-      a.date = new Date(a.date);
-      b.date = new Date(b.date);
-      if (a.date < b.date)
-        return -1;
-      else if (a.date > b.date)
-        return 1;
-      else
-        return 0;
+    var getDate = function(date, numberOfDay) {
+      var day = date.getDay() || 7;
+      if( day !== numberOfDay ) {
+        date.setHours(-24 * (day - numberOfDay));
+      }
+      return date;
     };
 
 
-    while (currentDate <= nextWeekToday)  {
-
-      var weekDay = currentDate.getDay();
-      if(weekDay !== 0 && weekDay !== 6) {
-        var year = currentDate.getFullYear();
-        var month = currentDate.getMonth()+1;
-        if (month < 10) {
-          month = '0'+month;
-        }
-        var date = currentDate.getDate();
-        if (date < 10) {
-          date = '0'+date;
-        }
-        $http.get(
-          'http://www.sodexo.fi/ruokalistat/output/daily_json/54/'+year+'/'+month+'/'+date+'/fi'
-        ).then(function(response) {
-          var dateFromUrl = response.config.url;
-          dateFromUrl = dateFromUrl.replace('http://www.sodexo.fi/ruokalistat/output/daily_json/54/', '').replace('/fi', '');
-          checkedDates++;
-          var courses = response.data.courses;
-          if (courses.length > 0) {
-            var day = {
-              date: dateFromUrl,
-              courses: courses
-            };
-            menu.push(day);
-            console.log("a");
+    var formatMenus = function(thisWeek, nextWeek){
+      var i = 0;
+      var courses = [];
+      for (var k in thisWeek) {
+        // skip loop if the property is from prototype
+        if(thisWeek.hasOwnProperty(k)) {
+          if (dates[k] >= today.getDay()) {
+            var dailyMenu = {};
+            dailyMenu.date = getDate(today, dates[k]).toString();
+            dailyMenu.courses = thisWeek[k];
+            courses.push(dailyMenu);
           }
-          if (checkedDates === 4) {
-            menu = menu.sort(compare);
-            console.log(menu);
-            deferred.resolve(menu);
-          }
-        });
+        }
       }
-      currentDate.setDate(currentDate.getDate()+1);
+      if(nextWeek.length > 0) {
+        for (var k in nextWeek) {
+          // skip loop if the property is from prototype
+          if(thisWeek.hasOwnProperty(k)) {
+            if (dates[k] >= nextWeekToday.getDay()) {
+              var dailyMenu = {};
+              dailyMenu.date = getDate(nextWeekToday, dates[k]).toString();
+              dailyMenu.courses = thisWeek[k];
+              courses.push(dailyMenu);
+            }
+          }
+        }
+      }
+      return courses;
+    };
+
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    if (todayMonth < 10) {
+      todayMonth = '0'+todayMonth;
+    }
+    var todayDate = today.getDate();
+    if (todayDate < 10) {
+      todayDate = '0'+todayDate;
     }
 
+    var nextWeekYear = nextWeekToday.getFullYear();
+    var nextWeekMonth = nextWeekToday.getMonth()+1;
+    if (nextWeekMonth < 10) {
+      nextWeekMonth = '0'+nextWeekMonth;
+    }
+    var nextWeekDate = nextWeekToday.getDate();
+    if (nextWeekDate < 10) {
+      nextWeekDate = '0'+nextWeekDate;
+    }
+
+    $http.get(
+      'http://www.sodexo.fi/ruokalistat/output/weekly_json/54/'+todayYear+'/'+todayMonth+'/'+todayDate+'/fi'
+    ).then(function(thisWeekMenu){
+      $http.get(
+        'http://www.sodexo.fi/ruokalistat/output/weekly_json/54/'+nextWeekYear+'/'+nextWeekMonth+'/'+nextWeekDate+'/fi'
+      ).then(function(nextWeekMenu){
+        deferred.resolve(formatMenus(thisWeekMenu.data.menus, nextWeekMenu.data.menus));
+      });
+    });
+
     return deferred.promise;
+  })
+
+  .factory('CordonComing', function ($http, $rootScope, $stateParams, $q) {
+    return {
+      get: function(Menu) {
+        Menu.forEach(function(day){
+          day.courses.forEach(function(course){
+            console.log(course);
+          });
+        });
+      }
+    }
   });
 
 /*.factory('Chats', function() {

@@ -1,6 +1,10 @@
 angular.module('starter.controllers', [])
 
-  .controller('IndexCtrl', function($scope, Menu) {
+  .controller('IndexCtrl', function($scope, Menu, CordonComing) {
+    Menu.then(function(menu){
+      var cordon = CordonComing.get(menu);
+      console.log(cordon);
+    });
     $scope.success = 'false';
 
   })
