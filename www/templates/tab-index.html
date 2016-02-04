@@ -1,6 +1,17 @@
 <ion-view view-title="Cordon Bleu @ICT">
-    <ion-content class="padding">
-        <p>Inform if cordon bleu @ict</p>
-        {{success}}
+    <ion-content class="padding" id="main_content">
+
+        <div ng-if="cordon" class="center">
+            <h4>YEEEEEESSSS</h4>
+            <h3>{{cordonDate}}</h3>
+            <h3 style="margin-top: 10px; margin-bottom: 30px">We have Cordon!</h3>
+            <h1><i class="fa fa-cutlery index-icon"></i></h1>
+        </div>
+        <div ng-if="nocordon" class="center">
+            <h4>Sorry...</h4>
+            <h5>No information about Cordon yet.</h5>
+            <h5>Hang in there!</h5>
+            <h1><i class="fa fa-heartbeat index-icon"></i></h1>
+        </div>
     </ion-content>
 </ion-view>

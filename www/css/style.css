@@ -1,1 +1,6 @@
-/* Empty. Add your own CSS if you like */
+.center {
+    text-align: center;
+}
+.index-icon {
+    font-size: 200px !important;
+}
