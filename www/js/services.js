@@ -10,6 +10,19 @@ angular.module('starter.services', [])
     var currentDate = today;
     var menu = [];
     var checkedDates = 0;
+
+    var compare = function(a, b) {
+      a.date = new Date(a.date);
+      b.date = new Date(b.date);
+      if (a.date < b.date)
+        return -1;
+      else if (a.date > b.date)
+        return 1;
+      else
+        return 0;
+    };
+
+
     while (currentDate <= nextWeekToday)  {
 
       var weekDay = currentDate.getDay();
@@ -39,6 +52,8 @@ angular.module('starter.services', [])
             console.log("a");
           }
           if (checkedDates === 4) {
+            menu = menu.sort(compare);
+            console.log(menu);
             deferred.resolve(menu);
           }
         });
