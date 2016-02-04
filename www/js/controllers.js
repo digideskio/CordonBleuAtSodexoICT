@@ -1,9 +1,10 @@
 angular.module('starter.controllers', [])
 
   .controller('IndexCtrl', function($scope, Menu, CordonComing) {
+    $scope.cordon = false;
     Menu.then(function(menu){
-      var cordon = CordonComing.get(menu);
-      console.log(cordon);
+      $scope.cordon = CordonComing.get(menu);
+      console.log($scope.cordon);
     });
     $scope.success = 'false';
 

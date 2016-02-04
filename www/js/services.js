@@ -90,13 +90,23 @@ angular.module('starter.services', [])
   })
 
   .factory('CordonComing', function ($http, $rootScope, $stateParams, $q) {
+    var matchToCordon = function(course){
+      var cordon = "cordon";
+      return (course.desc_fi.toLowerCase().indexOf(cordon) > -1 ||
+        course.title_en.toLowerCase().indexOf(cordon) > -1 ||
+        course.title_fi.toLowerCase().indexOf(cordon) > -1);
+    };
     return {
       get: function(Menu) {
+        var date = false;
         Menu.forEach(function(day){
           day.courses.forEach(function(course){
-            console.log(course);
+            if (matchToCordon(course)) {
+              date = day.date;
+            }
           });
         });
+        return date;
       }
     }
   });
