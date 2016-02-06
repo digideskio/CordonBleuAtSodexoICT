@@ -4,8 +4,13 @@ angular.module('starter.services', [])
     var deferred = $q.defer();
 
     var today = new Date();
+
     var nextWeekToday = new Date();
-    nextWeekToday.setDate(nextWeekToday.getDate() + 7);
+    if (today.getDay() === 6 || today.getDay() === 0) {
+      nextWeekToday.setDate(nextWeekToday.getDate() + 5);
+    } else {
+      nextWeekToday.setDate(nextWeekToday.getDate() + 7);
+    }
 
     var dates = {
       'sunday': 0,
@@ -40,16 +45,14 @@ angular.module('starter.services', [])
           }
         }
       }
-      if(nextWeek.length > 0) {
+      if(Object.keys(nextWeek).length > 0) {
         for (var k in nextWeek) {
           // skip loop if the property is from prototype
           if(thisWeek.hasOwnProperty(k)) {
-            if (dates[k] >= nextWeekToday.getDay()) {
-              var dailyMenu = {};
-              dailyMenu.date = getDate(nextWeekToday, dates[k]).toString();
-              dailyMenu.courses = thisWeek[k];
-              courses.push(dailyMenu);
-            }
+            var dailyMenu = {};
+            dailyMenu.date = getDate(nextWeekToday, dates[k]).toString();
+            dailyMenu.courses = thisWeek[k];
+            courses.push(dailyMenu);
           }
         }
       }
