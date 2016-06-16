@@ -94,10 +94,10 @@ angular.module('starter.services', [])
 
   .factory('CordonComing', function ($http, $rootScope, $stateParams, $q) {
     var matchToCordon = function(course){
-      var cordon = "cordon";
-      return (course.desc_fi.toLowerCase().indexOf(cordon) > -1 ||
-        course.title_en.toLowerCase().indexOf(cordon) > -1 ||
-        course.title_fi.toLowerCase().indexOf(cordon) > -1);
+      var cordon = /[cg]ordon/;
+      return (cordon.test(course.desc_fi.toLowerCase()) ||
+        cordon.test(course.title_en.toLowerCase()) ||
+        cordon.test(course.title_fi.toLowerCase()));
     };
     return {
       get: function(Menu) {
